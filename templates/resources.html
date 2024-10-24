@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS 리소스 목록</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .resource-section {
+            margin-bottom: 40px;
+        }
+        /* Add this style to make the table responsive */
+        .accordion-body {
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>리소스 목록 (사용자: {{ profile }})</h1>
+
+       
+
+        <div class="accordion" id="resourceAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingEC2">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEC2" aria-expanded="true" aria-controls="collapseEC2">
+                        EC2 인스턴스
+                    </button>
+                </h2>
+                <div id="collapseEC2" class="accordion-collapse collapse show" aria-labelledby="headingEC2" data-bs-parent="#resourceAccordion">
+                    <div class="accordion-body">
+                        {% include 'ec2.html' %}
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingRDS">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRDS" aria-expanded="false" aria-controls="collapseRDS">
+                        RDS 인스턴스
+                    </button>
+                </h2>
+                <div id="collapseRDS" class="accordion-collapse collapse" aria-labelledby="headingRDS" data-bs-parent="#resourceAccordion">
+                    <div class="accordion-body">
+                        {% include 'rds.html' %}
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingEBS">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEBS" aria-expanded="false" aria-controls="collapseEBS">
+                        EBS 볼륨
+                    </button>
+                </h2>
+                <div id="collapseEBS" class="accordion-collapse collapse" aria-labelledby="headingEBS" data-bs-parent="#resourceAccordion">
+                    <div class="accordion-body">
+                        {% include 'ebs.html' %}
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingS3">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseS3" aria-expanded="false" aria-controls="collapseS3">
+                        S3 버킷
+                    </button>
+                </h2>
+                <div id="collapseS3" class="accordion-collapse collapse" aria-labelledby="headingS3" data-bs-parent="#resourceAccordion">
+                    <div class="accordion-body">
+                        {% include 's3.html' %}
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingPrefixList">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePrefixList" aria-expanded="false" aria-controls="collapsePrefixList">
+                        Prefix Lists
+                    </button>
+                </h2>
+                <div id="collapsePrefixList" class="accordion-collapse collapse" aria-labelledby="headingPrefixList" data-bs-parent="#resourceAccordion">
+                    <div class="accordion-body">
+                        {% include 'prefix_list.html' %}
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingVPC">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVPC" aria-expanded="false" aria-controls="collapseVPC">
+                        VPCs
+                    </button>
+                </h2>
+                <div id="collapseVPC" class="accordion-collapse collapse" aria-labelledby="headingVPC" data-bs-parent="#resourceAccordion">
+                    <div class="accordion-body">
+                        {% include 'vpc.html' %}
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSecurityGroup">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSecurityGroup" aria-expanded="false" aria-controls="collapseSecurityGroup">
+                        보안 그룹
+                    </button>
+                </h2>
+                <div id="collapseSecurityGroup" class="accordion-collapse collapse" aria-labelledby="headingSecurityGroup" data-bs-parent="#resourceAccordion">
+                    <div class="accordion-body">
+                        {% include 'security_group.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

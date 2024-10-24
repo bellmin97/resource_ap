@@ -1,0 +1,42 @@
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<div class="resource-section">
+    <button class="btn btn-primary toggle-btn" onclick="toggleContent('s3Content')">S3 버킷</button>
+    <div id="s3Content" class="content mt-3">
+        <table id="s3Table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Creation Date</th>
+                    <th>Region</th>
+                    <th>Versioning</th>
+                    <th>Last Updated</th>
+                    <th>Actions</th>
+                </tr>
+                <tr id="s3FilterRow">
+                    {% for i in range(6) %}
+                    <th>
+                        <select class="form-select filter-select" data-column="{{ i }}">
+                            <option value="">All</option>
+                        </select>
+                    </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for bucket in s3_buckets %}
+                <tr>
+                    <td>{{ bucket.Name }}</td>
+                    <td>{{ bucket.CreationDate }}</td>
+                    <td>{{ bucket.Region }}</td>
+                    <td>{{ bucket.Versioning }}</td>
+                    <td>{{ bucket.LastUpdated }}</td>
+                    <td><button class="btn btn-link" onclick="listObjects('{{ bucket.Name }}')">View Objects</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button id="downloadS3" class="btn btn-secondary download-btn">S3 버킷 데이터 다운로드</button>
+    </div>
+</div>

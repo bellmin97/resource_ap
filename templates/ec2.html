@@ -1,0 +1,56 @@
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<div class="resource-section">
+    <button class="btn btn-primary toggle-btn" onclick="toggleContent('ec2Content')">EC2 인스턴스</button>
+    <div id="ec2Content" class="content mt-3">
+        <table id="ec2Table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Instance ID</th>
+                    <th>Instance Type</th>
+                    <th>State</th>
+                    <th>Public IP</th>
+                    <th>Private IP</th>
+                    <th>VPC ID</th>
+                    <th>Subnet ID</th>
+                    <th>Launch Time</th>
+                    <th>Tags</th>
+                    <th>Security Groups</th>
+                    <th>Image ID</th>
+                    <th>Key Name</th>
+                </tr>
+                <tr id="filterRow">
+                    {% for i in range(13) %}
+                    <th>
+                        <select class="form-select filter-select" data-column="{{ i }}">
+                            <option value="">All</option>
+                        </select>
+                    </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for instance in ec2_instances %}
+                <tr>
+                    <td>{{ instance.Name }}</td>
+                    <td>{{ instance.InstanceId }}</td>
+                    <td>{{ instance.InstanceType }}</td>
+                    <td>{{ instance.State }}</td>
+                    <td>{{ instance.PublicIpAddress }}</td>
+                    <td>{{ instance.PrivateIpAddress }}</td>
+                    <td>{{ instance.VpcId }}</td>
+                    <td>{{ instance.SubnetId }}</td>
+                    <td>{{ instance.LaunchTime }}</td>
+                    <td>{{ instance.Tags }}</td>
+                    <td>{{ instance.SecurityGroups }}</td>
+                    <td>{{ instance.ImageId }}</td>
+                    <td>{{ instance.KeyName }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button id="downloadEC2" class="btn btn-secondary download-btn">EC2 인스턴스 데이터 다운로드</button>
+    </div>
+</div>

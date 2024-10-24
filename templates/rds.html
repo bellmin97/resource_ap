@@ -1,0 +1,33 @@
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<div class="resource-section">
+    <button class="btn btn-primary toggle-btn" onclick="toggleContent('rdsContent')">RDS 인스턴스</button>
+    <div id="rdsContent" class="content mt-3">
+        <table id="rdsTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>DBInstance Identifier</th>
+                    <th>Status</th>
+                    <th>Engine</th>
+                    <th>Engine Version</th>
+                    <th>Instance Class</th>
+                    <th>Endpoint</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rds_instance in rds_instances %}
+                <tr>
+                    <td>{{ rds_instance.DBInstanceIdentifier }}</td>
+                    <td>{{ rds_instance.DBInstanceStatus }}</td>
+                    <td>{{ rds_instance.Engine }}</td>
+                    <td>{{ rds_instance.EngineVersion }}</td>
+                    <td>{{ rds_instance.DBInstanceClass }}</td>
+                    <td>{{ rds_instance.Endpoint.Address if rds_instance.Endpoint else 'N/A' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button id="downloadRDS" class="btn btn-secondary download-btn">RDS 인스턴스 데이터 다운로드</button>
+    </div>
+</div>

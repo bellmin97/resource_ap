@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>EC2 인스턴스 세부 정보</title>
+    <style>
+        /* 스타일 정의 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        #instanceDetails {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>EC2 인스턴스 목록</h1>
+    <table id="ec2Table">
+        <thead>
+            <tr>
+                <th>Instance ID</th>
+                <th>Name</th>
+                <th>Instance Type</th>
+                <th>State</th>
+                <th>Public IP</th>
+                <th>Private IP</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for instance in ec2_instances %}
+            <tr>
+                <td>{{ instance.InstanceId }}</td>
+                <td>{{ instance.Name }}</td>
+                <td>{{ instance.InstanceType }}</td>
+                <td>{{ instance.State }}</td>
+                <td>{{ instance.PublicIpAddress }}</td>
+                <td>{{ instance.PrivateIpAddress }}</td>
+                <td><button onclick="viewInstanceDetails('{{ instance.InstanceId }}', '{{ profile }}')">View Details</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div id="instanceDetails" style="display:none;">
+        <h2>인스턴스 세부 정보</h2>
+        <div id="securityGroups"></div>
+        <div id="routeTables"></div>
+    </div>
+
+    <script>
+        function viewInstanceDetails(instanceId, profile) {
+            if (!profile) {
+                alert('Profile is required to fetch instance details.');
+                return;
+            }
+
+            fetch(`/instance_details?instanceId=${instanceId}&profile=${profile}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Network response was not ok: ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('instanceDetails').style.display = 'block';
+                    document.getElementById('securityGroups').innerHTML = `<h3>Security Groups</h3><pre>${JSON.stringify(data.security_groups, null, 2)}</pre>`;
+                    document.getElementById('routeTables').innerHTML = `<h3>Route Tables</h3><pre>${JSON.stringify(data.route_tables, null, 2)}</pre>`;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert(`Failed to fetch instance details: ${error.message}`);
+                });
+        }
+    </script>
+</body>
+</html>
